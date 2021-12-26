@@ -1,6 +1,5 @@
 
 module.exports = {
-
     reset: function balance(req, res, db) {
         db = [];
         return res.sendStatus(200)
