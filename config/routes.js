@@ -1,5 +1,5 @@
 const express = require('express')
-var controller = require('./Controller')
+var controller = require('./controller')
 const routes = express.Router()
 
 module.exports = routes
