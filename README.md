@@ -1,57 +1,40 @@
 # EBANX Coding Test
 
 ## Script
-1. Reset state before starting tests
 
-POST /reset
+* Reset state before starting tests
 
-200 OK
+     POST /reset
 
-2. Get balance for non-existing account
+* Get balance for non-existing account
 
-GET /balance?account_id=1234
+     GET /balance?account_id=1234
 
-404 0
+* Create account with initial balance
 
-3. Create account with initial balance
+     POST /event {"type":"deposit", "destination":"100", "amount":10}
 
-POST /event {"type":"deposit", "destination":"100", "amount":10}
+* Deposit into existing account
 
-201 {"destination": {"id":"100", "balance":10}}
+     POST /event {"type":"deposit", "destination":"100", "amount":10}
 
-4.  Deposit into existing account
+* Get balance for existing account
 
-POST /event {"type":"deposit", "destination":"100", "amount":10}
+     GET /balance?account_id=100
 
-201 {"destination": {"id":"100", "balance":20}}
+* Withdraw from non-existing account
 
-5. Get balance for existing account
+     POST /event {"type":"withdraw", "origin":"200", "amount":10}
 
-GET /balance?account_id=100
+* Withdraw from existing account
 
-200 20
+     POST /event {"type":"withdraw", "origin":"100", "amount":5}
 
-6. Withdraw from non-existing account
 
-POST /event {"type":"withdraw", "origin":"200", "amount":10}
+* Transfer from existing account
 
-404 0
+     POST /event {"type":"transfer", "origin":"100", "amount":15, "destination":"300"}
 
-7. Withdraw from existing account
+* Transfer from non-existing account
 
-POST /event {"type":"withdraw", "origin":"100", "amount":5}
-
-201 {"origin": {"id":"100", "balance":15}}
-
-8. Transfer from existing account
-
-POST /event {"type":"transfer", "origin":"100", "amount":15, "destination":"300"}
-
-201 {"origin": {"id":"100", "balance":0}, "destination": {"id":"300", "balance":15}}
-
-9. Transfer from non-existing account
-
-POST /event {"type":"transfer", "origin":"200", "amount":15, "destination":"300"}
-
-404 0
-
+     POST /event {"type":"transfer", "origin":"200", "amount":15, "destination":"300"}
